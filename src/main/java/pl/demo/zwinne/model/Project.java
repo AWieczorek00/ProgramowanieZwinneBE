@@ -31,7 +31,7 @@ public class Project {
     @Column(name = "DATE_MODIFY", nullable = false)
     private LocalDateTime dateModify;
 
-    @OneToMany(mappedBy = "PROJECT")
+    @OneToMany(mappedBy = "project")
     private List<Task> tasks;
 
 }
