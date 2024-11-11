@@ -5,4 +5,5 @@ Przejście do folderu docker/dbs
 W momencie, gdy jesteście w tym folderze uruchamacie cmd w nim
 Potem wykonujecie komende
 
-```docker-compose up -d
+```
+docker-compose up -d
