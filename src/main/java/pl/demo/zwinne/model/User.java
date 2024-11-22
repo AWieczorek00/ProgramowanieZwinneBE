@@ -27,6 +27,4 @@ public class User {
 
     @Column(name = "STATIONARY", nullable = false)
     private boolean stationary;
-
-
 }

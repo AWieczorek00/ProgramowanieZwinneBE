@@ -2,7 +2,6 @@ package pl.demo.zwinne.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Generated;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,7 +25,6 @@ public class Project {
     @Column(name = "DATE_CREATE", nullable = false, updatable = false)
     private LocalDateTime dateCreate;
 
-
     @UpdateTimestamp
     @Column(name = "DATE_MODIFY", nullable = false)
     private LocalDateTime dateModify;
@@ -34,4 +32,6 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
 
+    @ElementCollection
+    private List<User> users;
 }

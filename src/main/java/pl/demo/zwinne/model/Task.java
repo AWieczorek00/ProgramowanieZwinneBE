@@ -13,10 +13,6 @@ public class Task {
     @Column(name="ID")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "PROJECT_ID", nullable = false)
-    private Project project;
-
     @Column(name = "NAME", nullable = false, length = 50)
     private String name;
 
@@ -29,4 +25,7 @@ public class Task {
     @Column(name = "ESTIMATED_TIME", nullable = false)
     private int estimatedTime;
 
+    @ManyToOne
+    @JoinColumn(name = "PROJECT_ID", nullable = false)
+    private Project project;
 }
