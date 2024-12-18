@@ -20,7 +20,7 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Task>> getAllProjects() { return ResponseEntity.ok(taskService.getAll());
+    public ResponseEntity<List<Task>> getAllTasks() { return ResponseEntity.ok(taskService.getAll());
     }
 
 }

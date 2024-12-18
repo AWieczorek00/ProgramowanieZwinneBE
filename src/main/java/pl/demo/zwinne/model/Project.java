@@ -25,6 +25,9 @@ public class Project {
     @Column(name = "DATE_CREATE", nullable = false, updatable = false)
     private LocalDateTime dateCreate;
 
+    @Column(name = "DESCRIPTION", length = 500)
+    private String description;
+
     @UpdateTimestamp
     @Column(name = "DATE_MODIFY", nullable = false)
     private LocalDateTime dateModify;
