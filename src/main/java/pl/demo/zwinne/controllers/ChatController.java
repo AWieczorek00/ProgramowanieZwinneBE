@@ -14,6 +14,7 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/api/globalChat")
+
 public class ChatController {
 
     @Autowired
