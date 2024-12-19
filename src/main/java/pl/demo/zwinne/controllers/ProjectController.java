@@ -2,6 +2,7 @@ package pl.demo.zwinne.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.demo.zwinne.model.Project;
@@ -14,6 +15,7 @@ import pl.demo.zwinne.service.UserService;
 @Controller
 @Slf4j
 @RequestMapping("/api/project")
+@PreAuthorize("isAuthenticated()")
 public class ProjectController {
 
     @Autowired
