@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import pl.demo.zwinne.model.ChatMessage;
 import pl.demo.zwinne.model.ChatMessageForm;
 import pl.demo.zwinne.service.ChatService;
 
@@ -20,8 +21,7 @@ public class WebSocketController {
 
     @MessageMapping("/globalChat")
     @SendTo("/topic/global")
-    public ChatMessageForm globalChat(ChatMessageForm chatMessageForm) throws Exception{
-//        return chatService.save(chatMessageForm); TODO rozwiązanie docelowe :)
-        return chatMessageForm;
+    public ChatMessage globalChat(ChatMessageForm chatMessageForm) throws Exception{
+        return chatService.save(chatMessageForm);
     }
 }
