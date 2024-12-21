@@ -29,6 +29,7 @@ public class ChatServiceImpl implements ChatService {
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setMessage(chatMessageForm.getMessage());
+        chatMessage.setUsername(user.getUsername());
         chatMessage.setUser(user);
 
         return chatRepository.save(chatMessage);

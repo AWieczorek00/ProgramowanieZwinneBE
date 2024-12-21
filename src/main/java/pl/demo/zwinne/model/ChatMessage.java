@@ -16,6 +16,9 @@ public class ChatMessage {
     @Column(name = "MESSAGE", nullable = false, length = 256)
     private String message;
 
+    @Column(name = "USERNAME", nullable = false, length = 256)
+    private String username;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
