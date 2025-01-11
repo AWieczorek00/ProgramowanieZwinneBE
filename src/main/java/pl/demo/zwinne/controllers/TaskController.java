@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.demo.zwinne.model.Task;
 import pl.demo.zwinne.service.TaskService;
 
@@ -25,4 +26,25 @@ public class TaskController {
     public ResponseEntity<List<Task>> getAllTasks() { return ResponseEntity.ok(taskService.getAll());
     }
 
+    @GetMapping("/sorted")
+    public ResponseEntity<List<Task>> getSortedTasks(
+            @RequestParam String sortBy,
+            @RequestParam(defaultValue = "asc") String order,
+            @RequestParam String projectId){
+        List<Task> sortedTasks = taskService.getSortedTasks(sortBy, order, projectId);
+        return ResponseEntity.ok(sortedTasks);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Task>> searchTasks(
+            @RequestParam String searchText,
+            @RequestParam String projectId) {
+        try {
+            List<Task> filteredTasks = taskService.searchTasks(searchText, projectId);
+            return ResponseEntity.ok(filteredTasks);
+        } catch (Exception e) {
+            log.error("Error searching tasks", e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

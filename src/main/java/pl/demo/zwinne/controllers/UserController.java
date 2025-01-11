@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.demo.zwinne.model.User;
 import pl.demo.zwinne.service.UserService;
 
@@ -37,5 +38,25 @@ public class UserController {
     @PreAuthorize("hasAnyRole('STUDENT', 'SUPER_ADMIN')")
     public ResponseEntity<String> allUsers() {
         return ResponseEntity.ok("All users");
+    }
+
+    @GetMapping("/sorted")
+    public ResponseEntity<List<User>> getSortedUsers(
+            @RequestParam String sortBy,
+            @RequestParam(defaultValue = "asc") String order){
+        List<User> sortedUsers = userService.getSortedUsers(sortBy, order);
+        return ResponseEntity.ok(sortedUsers);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<User>> searchUsers(
+            @RequestParam String searchText) {
+        try {
+            List<User> filteredUsers = userService.searchUsers(searchText);
+            return ResponseEntity.ok(filteredUsers);
+        } catch (Exception e) {
+            log.error("Error searching users", e);
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
