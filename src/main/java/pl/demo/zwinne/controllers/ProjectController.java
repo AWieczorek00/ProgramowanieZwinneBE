@@ -29,6 +29,7 @@ public class ProjectController {
     @Autowired
     private TaskService taskService;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @PostMapping("/{projectId}/user/{userId}")
     public ResponseEntity<Void> addUserToProject(
             @PathVariable Long projectId,
@@ -48,6 +49,7 @@ public class ProjectController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @DeleteMapping("/{projectId}/user/{userId}")
     public ResponseEntity<Void> removeUserFromProject(
             @PathVariable Long projectId,

@@ -1,5 +1,6 @@
 package pl.demo.zwinne.controllers;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.demo.zwinne.config.AuthenticationService;
@@ -23,9 +24,12 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
-
-        return ResponseEntity.ok(registeredUser);
+        try {
+            User registeredUser = authenticationService.signup(registerUserDto);
+            return ResponseEntity.ok(registeredUser);
+        } catch (ConstraintViolationException ex) {
+            throw ex; // Przekazanie wyjątku do globalnego kontrolera obsługi wyjątków
+        }
     }
 
     @PostMapping("/login")
@@ -34,7 +38,7 @@ public class AuthenticationController {
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
 
-        LoginResponse loginResponse = new LoginResponse(jwtToken,jwtService.getExpirationTime());
+        LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
 
         return ResponseEntity.ok(loginResponse);
     }

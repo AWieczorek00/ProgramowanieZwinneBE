@@ -2,6 +2,8 @@ package pl.demo.zwinne.exception;
 
 
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.persistence.RollbackException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
@@ -9,10 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.security.SignatureException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -53,6 +58,34 @@ public class GlobalExceptionHandler {
         if (exception instanceof UserAlreadyExistsException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(409), exception.getMessage());
             errorDetail.setProperty("description", "Registration failed. User already exists.");
+        }
+
+        if (exception instanceof ConstraintViolationException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), "Validation failed");
+            Map<String, String> errors = new HashMap<>();
+            ((ConstraintViolationException) exception).getConstraintViolations().forEach(violation -> {
+                String propertyPath = violation.getPropertyPath().toString();
+                String message = violation.getMessage();
+                errors.put(propertyPath, message);
+            });
+            errorDetail.setProperty("errors", errors);
+            return errorDetail;
+        }
+
+
+        if (exception instanceof TransactionSystemException) {
+            Throwable cause = exception.getCause();
+            if (cause instanceof RollbackException && cause.getCause() instanceof ConstraintViolationException) {
+                errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), "Validation failed");
+                Map<String, String> errors = new HashMap<>();
+                ((ConstraintViolationException) cause.getCause()).getConstraintViolations().forEach(violation -> {
+                    String propertyPath = violation.getPropertyPath().toString();
+                    String message = violation.getMessage();
+                    errors.put(propertyPath, message);
+                });
+                errorDetail.setProperty("errors", errors);
+                return errorDetail;
+            }
         }
 
         if (errorDetail == null) {

@@ -1,6 +1,8 @@
 package pl.demo.zwinne.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -13,6 +15,8 @@ public class Task {
     @Column(name="ID")
     private Long id;
 
+    @NotEmpty(message = "Nazwa nie może być pusta")
+    @NotNull(message = "Nazwa nie może być pusta")
     @Column(name = "NAME", nullable = false, length = 50)
     private String name;
 

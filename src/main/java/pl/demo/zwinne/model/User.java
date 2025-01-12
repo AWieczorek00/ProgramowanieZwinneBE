@@ -1,6 +1,7 @@
 package pl.demo.zwinne.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,20 +26,30 @@ public class User implements UserDetails {
     @Column(name = "ID")
     private Long id;
 
+    @NotNull(message = "Imię nie może być puste")
+    @NotEmpty(message = "Imię nie może być puste")
     @Column(name = "NAME", nullable = false, length = 50)
     private String name;
 
+    @NotNull(message = "Nazwisko nie może być puste")
+    @NotEmpty(message = "Nazwisko nie może być puste")
     @Column(name = "SURNAME", nullable = false, length = 100)
     private String surname;
 
+    @Email
+    @NotNull(message = "Email nie może być puste")
+    @NotEmpty(message = "Email nie może być puste")
     @Column(name = "EMAIL", nullable = false, length = 50, unique = true)
     private String email;
 
+    @NotNull
     @Column(nullable = false)
     private String password;
 
+    @Size(min = 6, max = 20, message = "Index jest długości od 6 do 20 znaków")
     @Column(name = "INDEX_NUMBER", nullable = false, length = 20)
     private String indexNumber;
+
 
     @Column(name = "STATIONARY", nullable = false)
     private boolean stationary;

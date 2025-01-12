@@ -1,6 +1,8 @@
 package pl.demo.zwinne.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,6 +20,8 @@ public class Project {
     @Column(name = "ID")
     private Long id;
 
+    @NotNull(message = "Nazwa nie może być pusta")
+    @NotEmpty(message = "Nazwa nie może być pusta")
     @Column(name = "NAME", nullable = false, length = 50)
     private String name;
 

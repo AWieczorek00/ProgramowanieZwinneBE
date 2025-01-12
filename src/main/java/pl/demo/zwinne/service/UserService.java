@@ -11,4 +11,5 @@ public interface UserService  {
     User getUserById(Long id);
     List<User> getAll();
     User getUserByEmail(String email);
+    User changeRole(Long id, String role);
 }
