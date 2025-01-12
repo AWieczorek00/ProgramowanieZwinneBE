@@ -8,4 +8,6 @@ public interface TaskService {
     void deleteTask(Long id);
     List<Task> getAll();
     Task getTaskById(Long id);
+    List<Task> getSortedTasks(String sortBy, String order, String projectId);
+    List<Task> searchTasks(String searchText, String projectId);
 }

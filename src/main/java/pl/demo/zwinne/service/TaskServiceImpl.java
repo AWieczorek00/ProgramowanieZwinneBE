@@ -1,6 +1,7 @@
 package pl.demo.zwinne.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.demo.zwinne.model.Project;
 import pl.demo.zwinne.model.Task;
@@ -30,5 +31,18 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task getTaskById(Long id) {
         return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
+    }
+
+    @Override
+    public List<Task> getSortedTasks(String sortBy, String order, String projectId) {
+        Sort sort = order.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+        return taskRepository.findAll(sort);
+    }
+
+    @Override
+    public List<Task> searchTasks(String searchText, String projectId) {
+        return taskRepository.findByKeyword(searchText.toLowerCase(), projectId);
     }
 }
