@@ -8,15 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import pl.demo.zwinne.model.LogMessage;
 import pl.demo.zwinne.respository.LogRepo;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Enumeration;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @Slf4j
@@ -24,8 +21,8 @@ public class RequestLoggingFilter implements Filter {
 
     @Autowired
     Gson gson = new Gson();
-//    @Autowired
-//    private LogRepo logRepo;
+    @Autowired
+    private LogRepo logRepo;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -34,27 +31,11 @@ public class RequestLoggingFilter implements Filter {
         String message = "[doFilter][" + request + "]" + "[" + request.getMethod() + "]" + "[" + request.getRequestURI() + getParameters(request) + "]" + request.getHeader("user-agent") + request.getRemoteHost();
         filterChain.doFilter(request, response);
         try {
-            Map<String, String> logData = new HashMap<>();
-            logData.put("Date", String.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault())));
-            logData.put("Type", "INFO");
-            logData.put("Message", message);
-            log.info(logData.get("Message"));
-//            logRepo.save(logData);
+            LogMessage logMessage = new LogMessage("0", message, Instant.now(), "Logger");
+            logRepo.save(logMessage);
         } catch (Exception exception) {
             throw new RuntimeException("doFilter Producer Exception");
         }
-//        try (Producer<String, String> logProducer = producerFactory.createProducer()) {
-//
-//            Map<String, String> logData = new HashMap<>();
-//            logData.put("Date", String.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault())));
-//            logData.put("Type", "INFO");
-//            logData.put("Message", message);
-//            ProducerRecord<String, String> producerRecord = new ProducerRecord<>("logs", gson.toJson(logData));
-//            logProducer.send(producerRecord);
-//
-//        } catch (Exception exception) {
-//            throw new ProducerSendException("doFilter Producer Exception");
-//        }
     }
 
     private String getParameters(HttpServletRequest request) {
