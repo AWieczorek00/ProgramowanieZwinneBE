@@ -13,6 +13,6 @@ public interface ProjectRepository extends JpaRepository <Project, Long> {
             "WHERE LOWER(p.name) LIKE %:keyword% " +
             "OR LOWER(p.description) LIKE %:keyword% " +
             "OR LOWER(CAST(p.dateCreate AS string)) LIKE %:keyword% " +
-            "OR LOWER(CAST(p.dateModify AS string)) LIKE %:keyword%")
+            "OR LOWER(CAST(p.dateDefense AS string)) LIKE %:keyword%")
     List<Project> findByKeyword(String keyword);
 }

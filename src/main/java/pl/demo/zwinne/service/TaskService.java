@@ -5,9 +5,10 @@ import java.util.List;
 
 public interface TaskService {
     void addTask(Task task);
-    void deleteTask(Long id);
+    void deleteTask(Task task);
+    Task save(Task task);
     List<Task> getAll();
     Task getTaskById(Long id);
-    List<Task> getSortedTasks(String sortBy, String order, String projectId);
-    List<Task> searchTasks(String searchText, String projectId);
+    List<Task> getSortedTasks(String sortBy, String order, Long projectId);
+    List<Task> searchTasks(String searchText, Long projectId);
 }

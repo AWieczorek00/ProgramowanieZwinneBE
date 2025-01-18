@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.demo.zwinne.model.Project;
+import pl.demo.zwinne.model.ProjectForm;
 import pl.demo.zwinne.model.Task;
 import pl.demo.zwinne.model.User;
 import pl.demo.zwinne.service.ProjectService;
@@ -29,7 +30,32 @@ public class ProjectController {
     @Autowired
     private TaskService taskService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+    @PostMapping("/")
+    public ResponseEntity<Project> addProject(@RequestBody ProjectForm projectForm){
+        return ResponseEntity.ok(projectService.addProject(projectForm));
+    }
+
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<Project> updateProject(@RequestBody ProjectForm projectForm, @PathVariable(name = "id") Long id){
+        return ResponseEntity.ok(projectService.updateProject(projectForm, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProject(@PathVariable(name = "id") Long id){
+        projectService.deleteProject(id);
+    }
+
+    @GetMapping("/{projectId}/user")
+    public ResponseEntity<List<User>> getAllUsersFromProject(
+            @PathVariable Long projectId
+    ){
+        return ResponseEntity.ok(projectService.getProjectById(projectId).getUsers());
+    }
+
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @PostMapping("/{projectId}/user/{userId}")
     public ResponseEntity<Void> addUserToProject(
             @PathVariable Long projectId,
@@ -44,12 +70,11 @@ public class ProjectController {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             log.error("Error adding user to project", e);
-
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @DeleteMapping("/{projectId}/user/{userId}")
     public ResponseEntity<Void> removeUserFromProject(
             @PathVariable Long projectId,
@@ -104,7 +129,7 @@ public class ProjectController {
             Task task = taskService.getTaskById(taskId);
 
             project.getTasks().remove(task);
-            taskService.deleteTask(taskId);
+            taskService.deleteTask(task);
             projectService.saveProject(project);
 
             return ResponseEntity.ok().build();

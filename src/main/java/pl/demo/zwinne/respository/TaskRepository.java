@@ -13,6 +13,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             "WHERE LOWER(t.name) LIKE %:keyword% " +
             "OR LOWER(t.description) LIKE %:keyword% " +
             "OR LOWER(CAST(t.estimatedTime AS string)) LIKE %:keyword% " +
-            "AND t.project = :projectId")
-    List<Task> findByKeyword(String keyword, String projectId);
+            "AND t.project.id = :projectId")
+    List<Task> findByKeyword(String keyword, Long projectId);
 }

@@ -21,8 +21,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
+    public void deleteTask(Task task) {
+        taskRepository.deleteById(task.getId());
+    }
+
+    @Override
+    public Task save(Task task) {
+        return taskRepository.save(task);
     }
 
     @Override
@@ -34,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getSortedTasks(String sortBy, String order, String projectId) {
+    public List<Task> getSortedTasks(String sortBy, String order, Long projectId) {
         Sort sort = order.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
                 : Sort.by(sortBy).ascending();
@@ -42,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> searchTasks(String searchText, String projectId) {
+    public List<Task> searchTasks(String searchText, Long projectId) {
         return taskRepository.findByKeyword(searchText.toLowerCase(), projectId);
     }
 }

@@ -32,13 +32,24 @@ public class Project {
     @Column(name = "DESCRIPTION", length = 500)
     private String description;
 
-    @UpdateTimestamp
-    @Column(name = "DATE_MODIFY", nullable = false)
-    private LocalDateTime dateModify;
+    @Column(name = "DATE_DEFENSE", nullable = false)
+    private LocalDateTime dateDefense;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",  cascade = CascadeType.REMOVE)
     private List<Task> tasks;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<File> file;
 
     @ElementCollection
     private List<User> users;
+
+    public Project(ProjectForm projectForm){
+        this.name = projectForm.getName();
+        this.description = projectForm.getDescription();
+        this.dateCreate = projectForm.getDateCreate();
+        this.dateDefense = projectForm.getDateDefense();
+    }
+
+    public Project(){}
 }
