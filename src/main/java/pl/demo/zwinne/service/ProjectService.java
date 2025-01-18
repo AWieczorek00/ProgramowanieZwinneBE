@@ -1,10 +1,13 @@
 package pl.demo.zwinne.service;
 
 import pl.demo.zwinne.model.Project;
+import pl.demo.zwinne.model.ProjectForm;
+
 import java.util.List;
 
 public interface ProjectService {
-    void addProject(Project project);
+    Project addProject(ProjectForm projectForm);
+    Project updateProject(ProjectForm projectForm, Long projectID);
     void deleteProject(Long id);
     void saveProject(Project project);
     List<Project> getAll();

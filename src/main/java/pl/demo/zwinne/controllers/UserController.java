@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.demo.zwinne.Enum.RoleEnum;
 import pl.demo.zwinne.model.User;
 import pl.demo.zwinne.service.UserService;
 

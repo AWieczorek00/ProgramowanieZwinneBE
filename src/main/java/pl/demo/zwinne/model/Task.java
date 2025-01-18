@@ -1,5 +1,6 @@
 package pl.demo.zwinne.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -31,5 +32,6 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "PROJECT_ID", nullable = false)
+    @JsonIgnore
     private Project project;
 }

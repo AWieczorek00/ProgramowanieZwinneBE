@@ -30,7 +30,7 @@ public class TaskController {
     public ResponseEntity<List<Task>> getSortedTasks(
             @RequestParam String sortBy,
             @RequestParam(defaultValue = "asc") String order,
-            @RequestParam String projectId){
+            @RequestParam Long projectId){
         List<Task> sortedTasks = taskService.getSortedTasks(sortBy, order, projectId);
         return ResponseEntity.ok(sortedTasks);
     }
@@ -38,7 +38,7 @@ public class TaskController {
     @GetMapping("/search")
     public ResponseEntity<List<Task>> searchTasks(
             @RequestParam String searchText,
-            @RequestParam String projectId) {
+            @RequestParam Long projectId) {
         try {
             List<Task> filteredTasks = taskService.searchTasks(searchText, projectId);
             return ResponseEntity.ok(filteredTasks);
