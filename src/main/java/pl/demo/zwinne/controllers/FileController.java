@@ -29,8 +29,9 @@ public class FileController {
 
     //    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @DeleteMapping("/project/{projectID}/file")
-    public void deleteFile(@PathVariable Long projectID, @RequestParam String filename) {
+    public ResponseEntity<Void> deleteFile(@PathVariable Long projectID, @RequestParam String filename) {
         minioService.delete(filename, projectID);
+        return ResponseEntity.ok().build();
     }
 
 //    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER', 'STUDENT')")
