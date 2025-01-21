@@ -48,6 +48,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> searchTasks(String searchText, Long projectId) {
-        return taskRepository.findByKeyword(searchText.toLowerCase(), projectId);
+        return taskRepository.findByKeywordAndProjectId(searchText.toLowerCase(), projectId);
     }
 }

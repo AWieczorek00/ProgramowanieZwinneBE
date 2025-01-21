@@ -37,16 +37,18 @@ public class User implements UserDetails {
     private String surname;
 
     @Email
-    @NotNull(message = "Email nie może być puste")
-    @NotEmpty(message = "Email nie może być puste")
+    @NotNull(message = "Email nie może być pusty")
+    @NotEmpty(message = "Email nie może być pusty")
     @Column(name = "EMAIL", nullable = false, length = 50, unique = true)
     private String email;
 
-    @NotNull
+    @NotNull(message = "Hasło nie może być puste")
+    @NotEmpty(message = "Hasło nie może być puste")
+    @NotBlank(message = "Hasło nie może być puste")
     @Column(nullable = false)
     private String password;
 
-    @Size(min = 6, max = 20, message = "Index jest długości od 6 do 20 znaków")
+    @Size(min = 6, max = 20, message = "Index musi być długości od 6 do 20 znaków")
     @Column(name = "INDEX_NUMBER", nullable = false, length = 20)
     private String indexNumber;
 

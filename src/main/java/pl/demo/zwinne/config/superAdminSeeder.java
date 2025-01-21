@@ -43,7 +43,7 @@ public class superAdminSeeder implements CommandLineRunner {
 
         User user = new User();
         user.setEmail("superAdmin@gmail.com");
-        user.setPassword(passwordEncoder.encode("sAdmin"));
+        user.setPassword(passwordEncoder.encode("sAdmin123$"));
         user.setName("superAdmin");
         user.setSurname("superAdmin");
         user.setRole(role.get());

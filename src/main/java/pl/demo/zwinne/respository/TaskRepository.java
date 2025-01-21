@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT t FROM Task t " +
-            "WHERE LOWER(t.name) LIKE %:keyword% " +
-            "OR LOWER(t.description) LIKE %:keyword% " +
-            "OR LOWER(CAST(t.estimatedTime AS string)) LIKE %:keyword% " +
-            "AND t.project.id = :projectId")
-    List<Task> findByKeyword(String keyword, Long projectId);
+            "WHERE (LOWER(t.name) LIKE %?1 " +
+            "OR LOWER(t.description) LIKE %?1 " +
+            "OR LOWER(CAST(t.estimatedTime AS string)) LIKE %?1 )" +
+            "AND t.project.id = ?2")
+    List<Task> findByKeywordAndProjectId(String keyword, Long projectId);
 }

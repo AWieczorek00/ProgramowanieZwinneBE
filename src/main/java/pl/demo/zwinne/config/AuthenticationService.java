@@ -37,7 +37,7 @@ public class AuthenticationService {
     }
 
     public User signup(RegisterUserDto input) {
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.valueOf(input.getRole()));
+        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.STUDENT);
         Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
 
         if (optionalRole.isEmpty()) {
