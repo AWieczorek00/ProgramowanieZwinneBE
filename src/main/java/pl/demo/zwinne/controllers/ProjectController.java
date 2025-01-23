@@ -33,23 +33,25 @@ public class ProjectController {
     private TaskService taskService;
 
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @PostMapping("/")
     public ResponseEntity<Project> addProject(@Valid @RequestBody ProjectForm projectForm){
         return ResponseEntity.ok(projectService.addProject(projectForm));
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @PatchMapping("/{id}")
     public ResponseEntity<Project> updateProject(@Valid @RequestBody ProjectForm projectForm, @PathVariable(name = "id") Long id){
         return ResponseEntity.ok(projectService.updateProject(projectForm, id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @DeleteMapping("/{id}")
     public void deleteProject(@PathVariable(name = "id") Long id){
         projectService.deleteProject(id);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER', 'STUDENT')")
     @GetMapping("/{projectId}/user")
     public ResponseEntity<List<User>> getAllUsersFromProject(
             @PathVariable Long projectId
@@ -57,7 +59,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjectById(projectId).getUsers());
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @PostMapping("/{projectId}/user/{userId}")
     public ResponseEntity<Void> addUserToProject(
             @PathVariable Long projectId,
@@ -66,7 +68,7 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @DeleteMapping("/{projectId}/user/{userId}")
     public ResponseEntity<Void> removeUserFromProject(
             @PathVariable Long projectId,
@@ -75,6 +77,7 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @PostMapping("/{projectId}/task")
     public ResponseEntity<Void> addTaskToProject(
             @PathVariable Long projectId,
@@ -83,6 +86,7 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @DeleteMapping("/{projectId}/task/{taskId}")
     public ResponseEntity<Void> removeTaskFromProject(
             @PathVariable Long projectId,

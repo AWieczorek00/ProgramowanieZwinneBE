@@ -21,20 +21,20 @@ public class FileController {
     @Autowired
     private MinioService minioService;
 
-    //    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER', 'STUDENT')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER', 'STUDENT')")
     @PostMapping("/project/{projectID}")
     public ResponseEntity<String> addFile(@PathVariable Long projectID, @RequestPart(value = "file") MultipartFile file) {
         return ResponseEntity.ok(minioService.add(file.getOriginalFilename(), file, projectID));
     }
 
-    //    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER')")
     @DeleteMapping("/project/{projectID}/file")
     public ResponseEntity<Void> deleteFile(@PathVariable Long projectID, @RequestParam String filename) {
         minioService.delete(filename, projectID);
         return ResponseEntity.ok().build();
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER', 'STUDENT')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','TEACHER', 'STUDENT')")
     @GetMapping("/project/{projectID}/file")
     public ResponseEntity<List<File>> getAllFilesFromProject(@PathVariable Long projectID){
         return ResponseEntity.ok(minioService.getAllFileFromProject(projectID));

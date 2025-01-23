@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import pl.demo.zwinne.dto.ProjectForm;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,13 +37,13 @@ public class Project {
     private LocalDateTime dateDefense;
 
     @OneToMany(mappedBy = "project",  cascade = CascadeType.REMOVE)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
-    private List<File> file;
+    private List<File> file = new ArrayList<>();
 
     @ElementCollection
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     public Project(ProjectForm projectForm){
         this.name = projectForm.getName();

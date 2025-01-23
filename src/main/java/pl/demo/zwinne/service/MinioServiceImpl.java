@@ -74,6 +74,7 @@ public class MinioServiceImpl implements MinioService {
         try {
             Project project = projectService.getProjectById(projectID);
             File file = fileRepository.findByFilename(filename);
+            log.info(filename);
             project.getFile().remove(file);
             fileRepository.delete(file);
             projectService.saveProject(project);

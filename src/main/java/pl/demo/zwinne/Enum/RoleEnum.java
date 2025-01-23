@@ -5,4 +5,5 @@ public enum RoleEnum {
     TEACHER,
     ADMIN,
     SUPER_ADMIN,
+    TEST
 }
