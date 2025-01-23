@@ -63,6 +63,7 @@ public class UserController {
     }
 
     @PostMapping("changeRole/{id}/{role}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<User> getUser(@PathVariable(name = "id") Long id, @PathVariable(name = "role") String role) {
         User user = userService.changeRole(id, role);
         return ResponseEntity.ok(user);
