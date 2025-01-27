@@ -19,7 +19,7 @@ public class RegisterUserDto {
     private String email;
 
     @Size(min = 8, max = 128)
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.])(?=\\S+$).{8,}$",
             message = "Hasło musi zawierać jedną cyfrę, jeden mały znak, jeden duży znak, jeden specjalny znak, i brak spacji")
     private String password;
 
